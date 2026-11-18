@@ -23,9 +23,8 @@ import AnalyticsReports from './pages/dashboard/AnalyticsReports';
 import TeamPermissions from './pages/dashboard/TeamPermissions';
 import BillingSubscription from './pages/dashboard/BillingSubscription';
 import NotificationsPage from './pages/dashboard/NotificationsPage';
-import SuperAdminDashboard from './pages/admin/SuperAdminDashboard';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
-
+import SuperAdminDashboard from './pages/admin/SuperAdminDashboard';
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { user, loading, requiresOnboarding } = useAuth();
@@ -66,7 +65,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-<Route path="profile" element={<ProfileSettings />} />
+
             {/* Farm Owner & Authorized Worker Workspace */}
             <Route
               path="/dashboard"
@@ -89,10 +88,8 @@ export default function App() {
               <Route path="team" element={<TeamPermissions />} />
               <Route path="billing" element={<BillingSubscription />} />
               <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="profile" element={<ProfileSettings />} />
             </Route>
-
-
-
 
             {/* Super Admin SaaS Control Center */}
             <Route
@@ -104,7 +101,7 @@ export default function App() {
               }
             >
               <Route index element={<SuperAdminDashboard />} />
-<Route path="profile" element={<ProfileSettings />} />
+              <Route path="profile" element={<ProfileSettings />} />
               <Route path="*" element={<SuperAdminDashboard />} />
             </Route>
           </Routes>
