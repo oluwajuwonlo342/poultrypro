@@ -24,6 +24,8 @@ import TeamPermissions from './pages/dashboard/TeamPermissions';
 import BillingSubscription from './pages/dashboard/BillingSubscription';
 import NotificationsPage from './pages/dashboard/NotificationsPage';
 import SuperAdminDashboard from './pages/admin/SuperAdminDashboard';
+import ProfileSettings from './pages/dashboard/ProfileSettings';
+
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { user, loading, requiresOnboarding } = useAuth();
@@ -88,7 +90,10 @@ export default function App() {
               <Route path="billing" element={<BillingSubscription />} />
               <Route path="notifications" element={<NotificationsPage />} />
             </Route>
-
+// Inside <Route path="/dashboard" ...>:
+<Route path="profile" element={<ProfileSettings />} />
+// Inside <Route path="/admin" ...>:
+<Route path="profile" element={<ProfileSettings />} />
             {/* Super Admin SaaS Control Center */}
             <Route
               path="/admin"
