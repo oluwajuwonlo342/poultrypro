@@ -66,7 +66,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-
+<Route path="profile" element={<ProfileSettings />} />
             {/* Farm Owner & Authorized Worker Workspace */}
             <Route
               path="/dashboard"
@@ -90,10 +90,10 @@ export default function App() {
               <Route path="billing" element={<BillingSubscription />} />
               <Route path="notifications" element={<NotificationsPage />} />
             </Route>
-// Inside <Route path="/dashboard" ...>:
-<Route path="profile" element={<ProfileSettings />} />
-// Inside <Route path="/admin" ...>:
-<Route path="profile" element={<ProfileSettings />} />
+
+
+
+
             {/* Super Admin SaaS Control Center */}
             <Route
               path="/admin"
@@ -104,6 +104,7 @@ export default function App() {
               }
             >
               <Route index element={<SuperAdminDashboard />} />
+<Route path="profile" element={<ProfileSettings />} />
               <Route path="*" element={<SuperAdminDashboard />} />
             </Route>
           </Routes>
