@@ -24,12 +24,24 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    const msg = error.response?.data?.message || '';
+
+    if (status === 401) {
       localStorage.removeItem('poultrypro_token');
       if (!window.location.pathname.startsWith('/login') && window.location.pathname !== '/') {
         window.location.href = '/login';
       }
     }
+
+    // Trigger global Upgrade Prompt Modal when hitting a SaaS plan quota or feature gate
+    if (
+      status === 403 &&
+      (msg.includes('Plan limit reached') || msg.includes('current subscription plan'))
+    ) {
+      window.dispatchEvent(new CustomEvent('poultrypro:plan-limit', { detail: { message: msg } }));
+    }
+
     return Promise.reject(error);
   }
 );
