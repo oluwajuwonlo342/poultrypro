@@ -21,6 +21,7 @@ import {
   ChevronRight,
   Sprout,
   ShieldAlert,
+  UserCircle,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useFarm } from '../../context/FarmContext';
@@ -38,6 +39,8 @@ export default function DashboardLayout() {
     navigate('/login');
   };
 
+  const profileRoute = user?.role === 'super_admin' ? '/admin/profile' : '/dashboard/profile';
+
   // Build role-based navigation links
   const navItems =
     user?.role === 'super_admin'
@@ -48,6 +51,7 @@ export default function DashboardLayout() {
           { to: '/admin/plans', label: 'Subscription Plans', icon: CreditCard },
           { to: '/admin/transactions', label: 'Paystack Payments', icon: Wallet },
           { to: '/admin/tickets', label: 'Support Tickets', icon: ShieldAlert },
+          { to: '/admin/profile', label: 'Profile Settings', icon: UserCircle },
         ]
       : [
           { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, end: true, show: true },
@@ -62,10 +66,11 @@ export default function DashboardLayout() {
           { to: '/dashboard/farms', label: 'My Farms', icon: Building, show: user?.role === 'farm_owner' },
           { to: '/dashboard/team', label: 'Workers & Roles', icon: Users, show: user?.role === 'farm_owner' },
           { to: '/dashboard/billing', label: 'Subscription', icon: CreditCard, show: user?.role === 'farm_owner' },
+          { to: '/dashboard/profile', label: 'Profile Settings', icon: UserCircle, show: true },
         ].filter((item) => item.show);
 
   const SidebarLinks = ({ onNavigate }) => (
-    <nav className="flex-1 space-y-1 px-3 py-4">
+    <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
       {navItems.map((item) => (
         <NavLink
           key={item.to}
@@ -96,7 +101,7 @@ export default function DashboardLayout() {
         }`}
       >
         <div className="flex h-16 items-center justify-between border-b border-gray-100 px-4">
-          <Link to="/dashboard" className="flex items-center gap-2.5 overflow-hidden">
+          <Link to={user?.role === 'super_admin' ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 overflow-hidden">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-primary text-white">
               <Sprout className="h-5 w-5" />
             </div>
@@ -175,15 +180,22 @@ export default function DashboardLayout() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
-              to="/dashboard/notifications"
-              className="relative rounded-xl p-2 text-gray-600 hover:bg-brand-light hover:text-brand-primary"
-            >
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-brand-primary" />
-            </Link>
+            {user?.role !== 'super_admin' && (
+              <Link
+                to="/dashboard/notifications"
+                className="relative rounded-xl p-2 text-gray-600 hover:bg-brand-light hover:text-brand-primary"
+                title="Notifications"
+              >
+                <Bell className="h-5 w-5" />
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-brand-primary" />
+              </Link>
+            )}
 
-            <div className="flex items-center gap-2.5 border-l border-gray-200 pl-3">
+            <Link
+              to={profileRoute}
+              className="flex items-center gap-2.5 rounded-xl border-l border-gray-200 py-1 pl-3 transition hover:opacity-80"
+              title="Profile Settings"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-dark text-xs font-bold text-white">
                 {user?.fullName?.charAt(0).toUpperCase()}
               </div>
@@ -191,7 +203,7 @@ export default function DashboardLayout() {
                 <p className="text-xs font-bold text-gray-800">{user?.fullName}</p>
                 <p className="text-[11px] capitalize text-gray-500">{user?.role?.replace('_', ' ')}</p>
               </div>
-            </div>
+            </Link>
           </div>
         </header>
 
