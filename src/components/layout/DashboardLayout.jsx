@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useFarm } from '../../context/FarmContext';
+import UpgradePromptModal from '../common/UpgradePromptModal';
 
 export default function DashboardLayout() {
   const { user, farms, logout } = useAuth();
@@ -198,6 +199,9 @@ export default function DashboardLayout() {
           <Outlet />
         </main>
       </div>
+
+      {/* Global Subscription Plan Limit / Upgrade Prompt Modal */}
+      <UpgradePromptModal />
     </div>
   );
 }
