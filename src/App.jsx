@@ -5,6 +5,7 @@ import { FarmProvider } from './context/FarmContext';
 import LandingPage from './pages/public/LandingPage';
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
+import VerifyEmail from './pages/public/VerifyEmail';
 import ForgotPassword from './pages/public/ForgotPassword';
 import ResetPassword from './pages/public/ResetPassword';
 import FarmSetupWizard from './pages/onboarding/FarmSetupWizard';
@@ -25,8 +26,6 @@ import BillingSubscription from './pages/dashboard/BillingSubscription';
 import NotificationsPage from './pages/dashboard/NotificationsPage';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
 import SuperAdminDashboard from './pages/admin/SuperAdminDashboard';
-import VerifyEmail from './pages/public/VerifyEmail';
-
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { user, loading, requiresOnboarding } = useAuth();
@@ -54,9 +53,8 @@ export default function App() {
             {/* Public Marketing & Auth */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
-// Inside <Routes> under Public Marketing & Auth:
-<Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
 
