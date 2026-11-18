@@ -25,6 +25,8 @@ import BillingSubscription from './pages/dashboard/BillingSubscription';
 import NotificationsPage from './pages/dashboard/NotificationsPage';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
 import SuperAdminDashboard from './pages/admin/SuperAdminDashboard';
+import VerifyEmail from './pages/public/VerifyEmail';
+
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { user, loading, requiresOnboarding } = useAuth();
@@ -52,6 +54,8 @@ export default function App() {
             {/* Public Marketing & Auth */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
+// Inside <Routes> under Public Marketing & Auth:
+<Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
